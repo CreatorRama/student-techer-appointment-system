@@ -1,0 +1,10 @@
+
+body{
+    background-color: rgb(150, 174, 174);
+}
+@media (min-width: 270px) and (max-width: 340px) {
+    #lockicon{
+        margin-top: 50px;
+    }
+
+}
