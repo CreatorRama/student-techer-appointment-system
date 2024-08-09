@@ -66,6 +66,8 @@ const Register = () => {
     department: '',
     subject: '',
   });
+
+  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
   const [error, setError] = useState(''); // State to hold error messages
   const navigate = useNavigate(); // Use this hook for navigation
 
@@ -76,7 +78,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/auth/register', userData)
+    axios.post(`${apiUrl}/api/auth/register`, userData)
       .then(response => {
         const userName = response.data.name;
         const sid = response.data._id;

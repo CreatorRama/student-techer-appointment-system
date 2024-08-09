@@ -38,10 +38,12 @@ const Login = () => {
   const [error, setError] = useState(''); // State for error messages
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password, role });
+      const res = await axios.post(`${apiUrl}/api/auth/login`, { email, password, role });
       localStorage.setItem('token', res.data.token);
 
       // Assume the response contains the user's name

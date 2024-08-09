@@ -6,7 +6,7 @@ import AdminPanel from './pages/AdminPanel';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import TeacherDashboard from './pages/TeacherDashboard';
-import StudentDashboard from './pages/StudentDashboard';
+import StudentDashboard from './pages/StudentDashboard.jsx';
 import AdminLogin from './components/AdminLogin';
 import PrivateRoute from './components/PrivateRoute'; // Import PrivateRoute
 import Studentprivateroute from './components/loginprivateroute';

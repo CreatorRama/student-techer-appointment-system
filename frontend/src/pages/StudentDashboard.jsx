@@ -106,10 +106,12 @@ const StudentDashboard = () => {
   const location = useLocation();
   const { name, id, email } = location.state || {};
 
+  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/teachers', {
+        const res = await axios.get(`${apiUrl}/api/teachers`, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem('token')}`,
           },
@@ -123,7 +125,7 @@ const StudentDashboard = () => {
     const fetchReplies = async () => {
       console.log(name);
       try {
-        const res = await axios.get(`http://localhost:5000/api/get?studentName=${name}`);
+        const res = await axios.get(`${apiUrl}/api/get?studentName=${name}`);
         console.log(res);
         setReplies([res.data.reply,res.data.teachernames]);
       } catch (error) {
@@ -166,7 +168,7 @@ const StudentDashboard = () => {
 
   const handleSearchTeacher = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/teachers', {
+      const res = await axios.get(`${apiUrl}/api/teachers`, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
@@ -196,7 +198,7 @@ const StudentDashboard = () => {
   
   const handleBookAppointment = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/appointments/book', {
+      const response = await axios.post(`${apiUrl}/api/appointments/book`, {
         studentId: id,
         teacherId: teacherid,
         StudentEmail: email,
@@ -237,7 +239,7 @@ const StudentDashboard = () => {
    const time=`${hours}:${minutes}`
    console.log(time);
     try {
-      const response = await axios.post('http://localhost:5000/api/messages/send', {
+      const response = await axios.post(`${apiUrl}/api/messages/send`, {
         studentId: id,
         teacherId: teacherid,
         content: message,

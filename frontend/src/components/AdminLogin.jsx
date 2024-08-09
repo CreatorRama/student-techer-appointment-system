@@ -63,11 +63,11 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/admin', { email, password });
+      const res = await axios.post(`${apiUrl}/api/auth/admin`, { email, password });
       localStorage.setItem('token', res.data.token);
 
       // Assume the response contains the user's name
