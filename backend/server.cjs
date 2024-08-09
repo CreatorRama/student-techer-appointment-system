@@ -1,26 +1,21 @@
-// server.cjs
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const helmet = require('helmet'); // Added for security
-const rateLimit = require('express-rate-limit'); // Added for rate limiting
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const connectDB = require('./Config/db.cjs');
 
 const app = express();
-
-// Set Mongoose strictQuery configuration
 const mongoose = require('mongoose');
-mongoose.set('strictQuery', false); // Adjust based on your needs
+mongoose.set('strictQuery', false);
 
 connectDB();
 
-// Define allowed origins
-const allowedOrigins = ['http://localhost:5173']; // Add your frontend origin here
+const allowedOrigins = ['http://localhost:5173'];
 
-// CORS configuration
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -30,37 +25,30 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-// Apply CORS middleware
 app.use(cors(corsOptions));
+app.use(helmet());
 
-// Apply security headers
-app.use(helmet()); // Added for security
-
-// Apply rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
 });
-app.use(limiter); // Apply rate limiting to all requests
+app.use(limiter);
 
 app.use(express.json());
 
-// Define routes
 app.use('/api/auth', require('./Routes/auth.cjs'));
 app.use('/api/teachers', require('./Routes/Teachers.cjs'));
 app.use('/api/appointments', require('./Routes/appointmentRoutes.cjs'));
 app.use('/api/teacher-appointments', require('./Routes/teacherAppointmentRoutes.cjs'));
 app.use('/api/messages', require('./Routes/messageRoutes.cjs'));
 app.use('/api/students', require('./Routes/student.cjs'));
-app.use('/api', require('./Routes/replies.cjs'));
-app.use('/api', require('./Routes/adminappointment.cjs'));
+app.use('/api/replies', require('./Routes/replies.cjs'));
+app.use('/api/adminappointments', require('./Routes/adminappointment.cjs'));
 
-// Root route
 app.get('/', (req, res) => {
   res.send('Hello from the root endpoint!');
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
