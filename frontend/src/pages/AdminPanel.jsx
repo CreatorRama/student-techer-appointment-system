@@ -91,6 +91,8 @@ const AdminPanel = () => {
   const [approvedStudents, setApprovedStudents] = useState({});
 const [messagesOpen, setMessagesOpen] = useState(false);
   const [appointment, setAppointment] = useState({ studentName: '', teacherName: '', date: '', time: '' });
+  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+
 
   useEffect(() => {
     fetchTeachers();
@@ -100,7 +102,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
 
   const fetchTeachers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/teachers', {
+      const res = await axios.get(`${apiUrl}/api/teachers`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -113,7 +115,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
   };
   const fetchMessages = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/messages', {
+      const res = await axios.get(`${apiUrl}/api/messages`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -128,7 +130,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/students');
+      const response = await axios.get(`${apiUrl}/api/students`);
       const studentsData = response.data;
 
       // Initialize students and approval status
@@ -147,7 +149,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
     e.preventDefault();
     try {
       if (editingTeacherId) {
-        await axios.put(`http://localhost:5000/api/teachers/${editingTeacherId}`, teacher, {
+        await axios.put(`${apiUrl}/api/teachers/${editingTeacherId}`, teacher, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -177,7 +179,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
 
   const deleteTeacher = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/teachers/${id}`, {
+      await axios.delete(`${apiUrl}/api/teachers/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -211,7 +213,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
     const {studentName,teacherName,date,time}=appointment
  const t=formatTime(time)
     try {
-      await axios.post('http://localhost:5000/api/appointment',{studentName,teacherName,date,t}, {
+      await axios.post(`${apiUrl}/api/appointment`,{studentName,teacherName,date,t}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -225,7 +227,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
 
   const handleApproveAppointment = async (studentId) => {
     try {
-      await axios.patch(`http://localhost:5000/api/students/${studentId}`, { status: 'approved' });
+      await axios.patch(`${apiUrl}/api/students/${studentId}`, { status: 'approved' });
 
       setApprovedStudents(prevState => ({
         ...prevState,
@@ -239,7 +241,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
   const deletestudent = async (studentId) => {
     try {
       // Make API call to approve appointment
-      const res=await axios.delete(`http://localhost:5000/api/students/${studentId}`);
+      const res=await axios.delete(`${apiUrl}/api/students/${studentId}`);
 
       console.log(res);
       fetchStudents()

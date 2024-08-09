@@ -102,12 +102,14 @@ const TeacherDashboard = () => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const { name, id } = location.state || {};
+  const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
+
 
   useEffect(() => {
     // Fetch student names
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/students'); // Adjust the API endpoint as needed
+        const response = await axios.get(`${apiUrl}/api/students`); // Adjust the API endpoint as needed
         setStudents(response.data);
       } catch (error) {
         console.error('Error fetching students:', error);
@@ -117,7 +119,7 @@ const TeacherDashboard = () => {
     // Get messages
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/messages?teacherId=${id}`);
+        const response = await axios.get(`${apiUrl}/api/messages?teacherId=${id}`);
         console.log(response);
         setMessages(response.data.messages);
       } catch (error) {
@@ -135,7 +137,7 @@ const TeacherDashboard = () => {
     // Fetch appointments for the teacher
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/appointments/${name}`); // Adjust the API endpoint as needed
+        const response = await axios.get(`${apiUrl}/api/appointments/${name}`); // Adjust the API endpoint as needed
         setAppointments(response.data);
       } catch (error) {
         console.error('Error fetching appointments:', error);
@@ -171,7 +173,7 @@ console.log(name);
 
   const handleSchedule = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/teacher-appointments/schedule', {
+      const response = await axios.post(`${apiUrl}/api/teacher-appointments/schedule`, {
         teacherId: id,
         studentId: studentId,
         date,
@@ -189,7 +191,7 @@ console.log(name);
 
   const handleApprove = async (appointmentId) => {
     try {
-      const response = await axios.patch(`http://localhost:5000/api/appointments/${appointmentId}/status`, { status: 'approved' });
+      const response = await axios.patch(`${apiUrl}/api/appointments/${appointmentId}/status`, { status: 'approved' });
       setAppointments((prevAppointments) =>
         prevAppointments.map((appt) => (appt._id === appointmentId ? { ...appt, status: 'approved' } : appt))
       );
@@ -200,7 +202,7 @@ console.log(name);
 
   const handleReject = async (appointmentId) => {
     try {
-      const response = await axios.patch(`http://localhost:5000/api/appointments/${appointmentId}/status`, { status: 'rejected' });
+      const response = await axios.patch(`${apiUrl}/api/appointments/${appointmentId}/status`, { status: 'rejected' });
       setAppointments((prevAppointments) =>
         prevAppointments.map((appt) => (appt._id === appointmentId ? { ...appt, status: 'rejected' } : appt))
       );
@@ -217,7 +219,7 @@ console.log(name);
     const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
     console.log(replyContent);
     try {
-      const response = await axios.post('http://localhost:5000/api/reply', {
+      const response = await axios.post(`${apiUrl}/api/replies/reply`, {
         teacherId: id,
         studentName: studentName,
         sendAt: date,
