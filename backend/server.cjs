@@ -14,7 +14,7 @@ app.set('trust proxy', 1); // This allows Express to trust the X-Forwarded-For h
 
 connectDB();
 
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['http://localhost:5173','https://student-techer-appointment-system.vercel.app/login'];
 
 const corsOptions = {
   origin: (origin, callback) => {

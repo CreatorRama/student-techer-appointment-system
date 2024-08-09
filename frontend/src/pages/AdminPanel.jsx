@@ -213,7 +213,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
     const {studentName,teacherName,date,time}=appointment
  const t=formatTime(time)
     try {
-      await axios.post(`${apiUrl}/api/appointment`,{studentName,teacherName,date,t}, {
+      await axios.post(`${apiUrl}/api/adminappointments/appointment`,{studentName,teacherName,date,t}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
