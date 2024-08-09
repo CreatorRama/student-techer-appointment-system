@@ -9,6 +9,9 @@ const app = express();
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
+// Enable trust proxy
+app.set('trust proxy', 1); // This allows Express to trust the X-Forwarded-For header
+
 connectDB();
 
 const allowedOrigins = ['http://localhost:5173'];
@@ -31,6 +34,7 @@ app.use(helmet());
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
+  keyGenerator: (req, res) => req.ip, // This ensures the rate limiting is based on the correct IP
 });
 app.use(limiter);
 
