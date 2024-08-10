@@ -4,20 +4,20 @@ import axios from 'axios';
 import {
   Container, Typography, TextField, Button, Tabs, Tab, Box, Card, CardContent
 } from '@mui/material';
-import { styled } from '@mui/system';
+import { fontSize, styled } from '@mui/system';
 
 // Styled components
-const DashboardContainer = styled(Container)({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  background: '#f5f7fa',
-  minHeight: '100vh',
-});
+// const DashboardContainer = styled(Container)({
+//   // display: 'flex',
+//   // flexDirection: 'column',
+//   // alignItems: 'center',
+//   // padding: '20px',
+//   // background: '#f5f7fa',
+//   // minHeight: '100vh',
+// });
 
 const Header = styled(Box)({
-  width: '100%',
+  // width: '100%',
   padding: '20px',
   backgroundColor: '#3f51b5',
   color: '#fff',
@@ -27,6 +27,8 @@ const Header = styled(Box)({
   position: 'relative',
 });
 
+
+
 const LogoutButton = styled(Button)({
   position: 'absolute',
   top: '20px',
@@ -35,6 +37,10 @@ const LogoutButton = styled(Button)({
   color: '#fff',
   '&:hover': {
     backgroundColor: '#c62828',
+  },
+  '@media (max-width: 600px)': {
+    width: '40px', // Apply width of 40px for screens less than 600px
+    fontSize:'10px',
   },
 });
 
@@ -277,18 +283,54 @@ const StudentDashboard = () => {
   })();
 
   return (
-    <DashboardContainer>
+    <Container className='flex flex-col items-center p-5 bg-[#f5f7fa] min-h-screen'>
       <Header>
-        <Typography variant="h4">Student Dashboard</Typography>
+      <Typography 
+  variant="h4"
+  sx={{
+    fontSize: {
+      xs: '0.9rem', // small font size for devices less than 500px
+      sm: '2.125rem', // normal h4 font size for larger devices
+    },
+  }}
+>
+  Student Dashboard
+</Typography>
         <Typography variant="h6">Welcome, {name}!</Typography>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+        <LogoutButton style={{marginTop:'-10px'}} onClick={handleLogout}>Logout</LogoutButton>
       </Header>
-      <DashboardTabs value={value} onChange={handleChange} aria-label="dashboard tabs">
-        <Tab label="Search Teacher" />
-        <Tab label="Book Appointment" />
-        <Tab label="Send Message" />
-        <Tab label="Received Messages" />
-      </DashboardTabs>
+      <DashboardTabs
+  value={value}
+  onChange={handleChange}
+  aria-label="dashboard tabs"
+  variant="scrollable"
+  scrollButtons="auto"
+  sx={{
+    borderBottom: '1px solid #ddd',
+    position: 'relative',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: '4px', /* Adjust the height as needed */
+      background: 'linear-gradient(#ff2e5f, #bbb99b)', /* Gradient color */
+      zIndex: 1,
+    },
+    '& .MuiTabs-flexContainer': {
+      position: 'relative',
+      zIndex: 2, /* Ensure tabs are above the gradient border */
+    },
+  }}
+>
+  <Tab label="Search Teacher" sx={{ minWidth: 'fit-content' }} />
+  <Tab label="Book Appointment" sx={{ minWidth: 'fit-content' }} />
+  <Tab label="Send Message" sx={{ minWidth: 'fit-content' }} />
+  <Tab label="Received Messages" sx={{ minWidth: 'fit-content' }} />
+</DashboardTabs>
+
+
       <DashboardTabPanel hidden={value !== 0}>
         <DashboardCard>
           <CardContent>
@@ -484,7 +526,7 @@ const StudentDashboard = () => {
           </CardContent>
         </DashboardCard>
       </DashboardTabPanel>
-    </DashboardContainer>
+    </Container>
   );
 };
 
