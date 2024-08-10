@@ -6,14 +6,14 @@ import { styled } from '@mui/system';
 import MessageCard from '../components/MessageCard';  // Adjust the path as necessary
 
 // Styled components
-const DashboardContainer = styled(Container)({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  background: '#f5f7fa',
-  minHeight: '100vh',
-});
+// const DashboardContainer = styled(Container)({
+//   display: 'flex',
+//   flexDirection: 'column',
+//   alignItems: 'center',
+//   padding: '20px',
+//   background: '#f5f7fa',
+//   minHeight: '100vh',
+// });
 
 const Header = styled(Box)({
   width: '100%',
@@ -35,14 +35,22 @@ const LogoutButton = styled(Button)({
   '&:hover': {
     backgroundColor: '#c62828',
   },
+  '@media (max-width: 600px)': {
+    width: '40px', // Apply width of 40px for screens less than 600px
+    fontSize:'10px',
+  },
 });
 
 const NavButton = styled(Button)({
   backgroundColor: '#3f51b5',
+  fontSize:'20px',
   color: '#fff',
   margin: '0 5px',
   '&:hover': {
     backgroundColor: '#303f9f',
+  },
+  '@media (max-width: 600px)': {
+    fontSize:'12px',
   },
 });
 
@@ -236,14 +244,24 @@ console.log(name);
   };
 
   return (
-    <DashboardContainer>
-      <Header>
-        <Typography variant="h4">Teacher Dashboard</Typography>
-        <Typography variant='h5'>Welcome! {name}</Typography>
-        <LogoutButton variant="contained" onClick={handleLogout}>Logout</LogoutButton>
+    <Container className='flex flex-col items-center p-5 bg-[#f5f7fa] min-h-screen'>
+          <Header >
+      <Typography 
+  variant="h4"
+  sx={{
+    fontSize: {
+      xs: '0.9rem', // small font size for devices less than 500px
+      sm: '2.125rem', // normal h4 font size for larger devices
+    },
+  }}
+>
+  Student Dashboard
+</Typography>
+        <Typography variant="h6">Welcome, {name}!</Typography>
+        <LogoutButton style={{marginTop:'-10px'}} onClick={handleLogout}>Logout</LogoutButton>
       </Header>
 
-      <Box mb={2}>
+      <Box style={{display:'flex'}} mb={2}>
         <NavButton onClick={() => showSection('schedule')}>Schedule Appointment</NavButton>
         <NavButton onClick={() => showSection('view-appointments')}>View Appointments</NavButton>
         <NavButton onClick={() => showSection('view-messages')}>View Messages</NavButton>
@@ -313,7 +331,7 @@ console.log(name);
           />
         ))}
       </Section>
-    </DashboardContainer>
+    </Container>
   );
 };
 
