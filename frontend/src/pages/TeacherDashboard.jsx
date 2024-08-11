@@ -255,7 +255,7 @@ const TeacherDashboard = () => {
     },
   }}
 >
-  Student Dashboard
+  Teacher Dashboard
 </Typography>
         <Typography variant="h6">Welcome, {name}!</Typography>
         <LogoutButton style={{marginTop:'-10px'}} onClick={handleLogout}>Logout</LogoutButton>
