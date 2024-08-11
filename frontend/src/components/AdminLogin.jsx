@@ -69,7 +69,6 @@ const AdminLogin = () => {
     try {
       const res = await axios.post(`${apiUrl}/api/auth/admin`, { email, password });
       localStorage.setItem('token', res.data.token);
-
       // Assume the response contains the user's name
       const userName = res.data.name;
 
