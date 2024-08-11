@@ -168,7 +168,7 @@ const TeacherDashboard = () => {
       localStorage.setItem('activeSection', activeSection);
     }
   }, [activeSection]);
-console.log(name);
+// console.log(name);
   const handleLogout = () => {
    if(name!==undefined) localStorage.removeItem('token');
     localStorage.removeItem('activeSection');

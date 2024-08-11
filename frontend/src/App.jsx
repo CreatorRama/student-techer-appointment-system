@@ -11,6 +11,7 @@ import AdminLogin from './components/AdminLogin';
 import PrivateRoute from './components/PrivateRoute'; // Import PrivateRoute
 import Studentprivateroute from './components/loginprivateroute';
 import Teacherprivateroute from './components/registerprivateroute';
+import Loginload from './components/loginload.jsx';
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/loginload" element={<Loginload />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/adminlogin" element={<AdminPanel />} />

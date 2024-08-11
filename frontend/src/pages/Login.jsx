@@ -7,6 +7,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Link } from 'react-router-dom'; // Import Link here
 import '../styles/Login.css';
+import Loginload from '../components/loginload';
 
 // Styled components for login page
 const LoginContainer = styled(Container)({
@@ -37,20 +38,19 @@ const Login = () => {
   const [role, setRole] = useState('student'); // Default role
   const [error, setError] = useState(''); // State for error messages
   const navigate = useNavigate();
+  const [valid,setvalid] =useState(false)
 
   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
-
+let res;
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${apiUrl}/api/auth/login`, { email, password, role });
+      setvalid(true)
+       res = await axios.post(`${apiUrl}/api/auth/login`, { email, password, role });
       localStorage.setItem('token', res.data.token);
-
-      // Assume the response contains the user's name
       const userName = res.data.name;
       const sid = res.data._id;
 
-      // Navigate based on the role and pass the userName
       if (res.data.role === 'teacher' && role === 'teacher') {
         navigate('/teacher-dashboard', { state: { name: userName, id: sid } });
       } else if (res.data.role === 'admin') {
@@ -66,15 +66,20 @@ const Login = () => {
         setError('Role is wrong');
       }
     } catch (error) {
+      setvalid(false)
       console.error(error);
       setError(error.response?.data?.message || 'An error occurred. Please try again.');
       setTimeout(() => {
         setError('');
       }, 1000);
     }
+
   };
 
   return (
+   <>
+   {
+  !res&&valid?<Loginload />:
     <LoginContainer>
       <Link to="/" className='hover:text-yellow-600 absolute top-2.5 left-2.5 text-blue-600 no-underline'>
         Go To Home
@@ -139,6 +144,9 @@ const Login = () => {
         </Grid>
       </form>
     </LoginContainer>
+}
+   </>
+        
   );
 };
 

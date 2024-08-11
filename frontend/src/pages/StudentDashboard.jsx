@@ -129,7 +129,7 @@ const StudentDashboard = () => {
     };
 
     const fetchReplies = async () => {
-      console.log(name);
+      // console.log(name);
       try {
         const res = await axios.get(`${apiUrl}/api/replies/get?studentName=${name}`);
         console.log(res);
