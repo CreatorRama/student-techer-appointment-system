@@ -132,7 +132,7 @@ const StudentDashboard = () => {
       // console.log(name);
       try {
         const res = await axios.get(`${apiUrl}/api/replies/get?studentName=${name}`);
-        console.log(res);
+        // console.log(res);
         setReplies([res.data.reply,res.data.teachernames]);
       } catch (error) {
         console.error('Error fetching replies:', error);
