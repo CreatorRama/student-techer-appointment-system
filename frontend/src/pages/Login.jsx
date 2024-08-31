@@ -81,8 +81,7 @@ const Login = () => {
   return (
     <>
       {res === 0 && valid ? <Loginload /> : null}
-      {/* <Loginload /> */}
-      <LoginContainer>
+      <LoginContainer className='overflow-hidden'>
         <Link to="/" className='hover:text-yellow-600 absolute top-2.5 left-2.5 text-blue-600 no-underline'>
           Go To Home
         </Link>
@@ -141,7 +140,7 @@ const Login = () => {
           <Grid container>
             <Grid item>
               <Link to="/register" style={{ textDecoration: 'none' }}>
-                <Typography className='hover:text-red-500' variant="body2">{"Don't have an account? Register"}</Typography>
+                <Typography className='hover:text-red-500' variant="body2">Don't have an account? Register</Typography>
               </Link>
             </Grid>
           </Grid>

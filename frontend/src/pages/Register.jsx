@@ -101,7 +101,7 @@ const Register = () => {
   };
 
   return (
-    <RegisterContainer>
+    <RegisterContainer className='overflow-hidden'>
       <Link to="/" className='hover:text-yellow-600 absolute top-2.5 left-2.5 text-blue-600 no-underline'>
         Go To Home
       </Link>
@@ -164,7 +164,7 @@ const Register = () => {
         <Grid container>
           <Grid item>
             <Link to="/login" style={{ textDecoration: 'none' }}>
-              <Typography className='hover:text-red-500'  variant="body2">{"Already have an account? Login"}</Typography>
+              <Typography className='hover:text-red-500'  variant="body2">Already have an account? Login</Typography>
             </Link>
           </Grid>
         </Grid>

@@ -43,7 +43,7 @@ const HomeButton = styled(Button)({
 
 const Home = () => {
   return (
-    <HomeContainer>
+    <HomeContainer className='overflow-hidden'>
       <Typography variant="h2" gutterBottom>
         Welcome to Our Platform
       </Typography>
