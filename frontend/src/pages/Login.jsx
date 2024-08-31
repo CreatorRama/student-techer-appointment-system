@@ -81,7 +81,7 @@ const Login = () => {
   return (
     <>
       {res === 0 && valid ? <Loginload /> : null}
-      <LoginContainer className='overflow-hidden'>
+      <LoginContainer className='overflow-y-hidden'>
         <Link to="/" className='hover:text-yellow-600 absolute top-2.5 left-2.5 text-blue-600 no-underline'>
           Go To Home
         </Link>
