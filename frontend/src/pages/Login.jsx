@@ -38,7 +38,7 @@ const Login = () => {
   const [role, setRole] = useState('student'); // Default role
   const [error, setError] = useState(''); // State for error messages
   const navigate = useNavigate();
-  const [valid, setvalid] = useState(false)
+  const [valid, setvalid] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL.trim().replace(/\/+$/, '');
   let res = 0;
@@ -80,8 +80,8 @@ const Login = () => {
   };
   return (
     <>
-      {res === 0 && valid ? <Loginload /> : null}
-      <LoginContainer className='overflow-y-hidden'>
+      {res === 0 && valid && <Loginload />}
+      <LoginContainer>
         <Link to="/" className='hover:text-yellow-600 absolute top-2.5 left-2.5 text-blue-600 no-underline'>
           Go To Home
         </Link>
@@ -147,7 +147,6 @@ const Login = () => {
         </form>
       </LoginContainer>
     </>
-
   );
 };
 

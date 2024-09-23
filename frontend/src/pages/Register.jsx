@@ -101,7 +101,7 @@ const Register = () => {
   };
 
   return (
-    <RegisterContainer className='overflow-y-hidden'>
+    <RegisterContainer>
       <Link to="/" className='hover:text-yellow-600 absolute top-2.5 left-2.5 text-blue-600 no-underline'>
         Go To Home
       </Link>

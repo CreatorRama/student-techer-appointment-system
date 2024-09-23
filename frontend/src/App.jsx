@@ -11,7 +11,6 @@ import AdminLogin from './components/AdminLogin';
 import PrivateRoute from './components/PrivateRoute'; // Import PrivateRoute
 import Studentprivateroute from './components/loginprivateroute';
 import Teacherprivateroute from './components/registerprivateroute';
-import Loginload from './components/loginload.jsx';
 import './index.css'
 
 
