@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30s',
+    expiresIn: '30m',
   });
 };
 
@@ -99,25 +99,35 @@ const login = async (req, res) => {
 }
 
 const adminlogin = async (req, res) => {
+  console.log('Admin login function called');
+  console.log('Request body:', req.body);
+  
   const { email, password } = req.body;
 
   if (!email || !password) {
+    console.log('Email or password missing');
     return res.status(400).json({ message: 'Email and password are required' });
   }
 
+  if (email !== "amanadmin@gmail.com" || password !== "admin") {
+    console.log('Invalid email or password');
+    return res.status(401).json({ message: 'Invalid email or password' });
+  }
+
   try {
-        res.json({
-          _id:6307552891,
-          name: 'Aman Pandey',
-          email: email,
-          role: 'admin',
-          token: generateToken(6307552891),
-        })
-      }
-     catch (error) {
-    console.error('Error logging in:', error);
-    res.status(500).json({ message: 'Server error', error });
+    const token = generateToken(6307552891);
+    res.json({
+      _id: 6307552891,
+      name: 'Aman Pandey',
+      email: email,
+      role: 'admin',
+      token: token,
+    });
+  } catch (error) {
+    console.error('Error in adminlogin:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-module.exports = { register, login,adminlogin }
+
+module.exports = { register, login, adminlogin }

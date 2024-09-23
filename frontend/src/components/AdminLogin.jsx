@@ -84,28 +84,37 @@ const AdminLogin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    
     try {
-      setvalid(true)
-      const res = await axios.post(`${apiUrl}/api/auth/admin`, { email, password });
+      setvalid(true);
+      
+      const res = await axios.post(
+        `${apiUrl}/api/auth/admin`, 
+        { email, password }
+      );
+      
+      console.log(res);
+      // Store token in localStorage
       localStorage.setItem('token', res.data.token);
-      // Assume the response contains the user's name
+      
       const userName = res.data.name;
-
-      res.data.email == "amanadmin@gmail.com" ? setvalid(true) : setvalid(false)
-
+      
+      res.data.email === "amanadmin@gmail.com" ? setvalid(true) : setvalid(false);
+      
       // Navigate based on the role and pass the userName
       if (res.data.role === 'admin') {
         navigate('/adminlogin', { state: { name: userName } });
       }
     } catch (error) {
+      console.log(error);
       setError(error.response?.data?.message || 'An error occurred. Please try again.');
-      setvalid(false)
+      setvalid(false);
       setTimeout(() => {
-        setError('')
+        setError('');
       }, 1000);
     }
   };
-
+  
   return (
     <>
       {res === 0 && valid && <Loginload />}

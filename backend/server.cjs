@@ -38,7 +38,18 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+
+
 app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+app.get('/test', (req, res) => {
+  console.log('Test route hit');
+  res.send('Test route works');
+});
 
 app.use('/api/auth', require('./Routes/auth.cjs'));
 app.use('/api/teachers', require('./Routes/Teachers.cjs'));
@@ -56,6 +67,11 @@ app.get('/', (req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
+});
+
+app.use((req, res) => {
+  console.log(`[${new Date().toISOString()}] 404 - Route not found: ${req.method} ${req.url}`);
+  res.status(404).send('Route not found');
 });
 
 const PORT = process.env.PORT || 5000;
