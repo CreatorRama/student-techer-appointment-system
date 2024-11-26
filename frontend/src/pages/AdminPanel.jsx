@@ -155,7 +155,7 @@ const [messagesOpen, setMessagesOpen] = useState(false);
           },
         });
       } else {
-        await axios.post('http://localhost:5000/api/teachers', teacher, {
+        await axios.post(`${apiUrl}/api/teachers`, teacher, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
